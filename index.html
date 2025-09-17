@@ -122,8 +122,8 @@
         const res = await fetch(`${BASE_URL}?name=${encodeURIComponent(currentName)}&passcode=${encodeURIComponent(currentPass)}`, {
           method: "GET"
         });
-        const data = await res.json();
-
+        const text = await res.text();       // 👈 get raw text
+        const data = JSON.parse(text);       // 👈 parse manually
         if (data.error) {
           alert("No data found or invalid login. A new profile will be created.");
         } else {
@@ -174,7 +174,8 @@
           body: JSON.stringify(data)
         });
 
-        const result = await response.json();
+        const text = await response.text();     // 👈 get raw text
+        const result = JSON.parse(text);        // 👈 parse manually
         if (result.status === "success") {
           alert("✅ Data saved to Google Sheets!");
         } else {
